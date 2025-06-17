@@ -17,9 +17,11 @@ public class BookCatalogService {
     private final BookCatalogRepository bookCatalogRepository;
     private final ModelMapper modelMapper;
 
+
     public BookCatalogService(BookCatalogRepository bookCatalogRepository, ModelMapper modelMapper) {
         this.bookCatalogRepository = bookCatalogRepository;
         this.modelMapper = modelMapper;
+
 
     }
 
@@ -29,5 +31,11 @@ public class BookCatalogService {
 
        if (bookCatalogOptional.isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT, "book already exists");
        bookCatalogRepository.save(book);
+    }
+
+    public BookCatalog getBookById(Long id) {
+        return bookCatalogRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
     }
 }
