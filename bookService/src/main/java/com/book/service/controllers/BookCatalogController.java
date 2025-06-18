@@ -23,9 +23,9 @@ public class BookCatalogController {
     }
 
     @PostMapping(path="create")
-    public ResponseEntity<String> createBook(@RequestBody BookDTO dto) {
-        bookCatalogService.addBook(dto);
-        return ResponseEntity.ok("Book added successfully");
+    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO dto) {
+        BookDTO saveBook  = bookCatalogService.addBook(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(saveBook);
 
     }
 

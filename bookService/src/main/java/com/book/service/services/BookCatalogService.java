@@ -5,15 +5,13 @@ import com.book.service.entities.BookCatalog;
 import com.book.service.repositories.BookCatalogRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class BookCatalogService {
@@ -29,14 +27,17 @@ public class BookCatalogService {
 
     }
 
-    public void addBook(BookDTO dto) {
-
+    public BookDTO addBook(BookDTO dto) {
         BookCatalog book = modelMapper.map(dto, BookCatalog.class);
-        Optional<BookCatalog> bookCatalogOptional = bookCatalogRepository.findByIsbn(book.getIsbn());
 
-        if (bookCatalogOptional.isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT, "book already exists");
-        bookCatalogRepository.save(book);
+        if (bookCatalogRepository.findByIsbn(book.getIsbn()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "book already exists");
+        }
+
+        BookCatalog savedBook = bookCatalogRepository.save(book);
+        return modelMapper.map(savedBook, BookDTO.class);
     }
+
 
     public BookCatalog getBookById(Long id) {
 
