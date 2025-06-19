@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -58,4 +59,22 @@ public class BookCatalogService {
         return catalog;
 
     }
+
+    public BookDTO updateBook(Long id, BookDTO dto) {
+        BookCatalog book = bookCatalogRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+
+        if (!Objects.equals(book.getTitle(), dto.getTitle())) book.setTitle(dto.getTitle());
+        else throw new ResponseStatusException(HttpStatus.CONFLICT, "New book has the same title that the old book");
+        if (!Objects.equals(book.getAuthor(), dto.getAuthor())) book.setAuthor(dto.getAuthor());
+        if (!Objects.equals(book.getIsbn(), dto.getIsbn())) book.setIsbn(dto.getIsbn());
+        if (!Objects.equals(book.getGenre(), dto.getGenre())) book.setGenre(dto.getGenre());
+
+        if (book.getAvailableCopies() != dto.getAvailableCopies()) book.setAvailableCopies(dto.getAvailableCopies());
+        if (book.getTotalCopies() != dto.getTotalCopies()) book.setTotalCopies(dto.getTotalCopies());
+
+        BookCatalog updated = bookCatalogRepository.save(book);
+        return modelMapper.map(updated, BookDTO.class);
+    }
+
 }

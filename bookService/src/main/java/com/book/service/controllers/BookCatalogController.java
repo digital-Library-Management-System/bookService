@@ -42,7 +42,14 @@ public class BookCatalogController {
         bookCatalogService.getAllBooks(page, size);
         return ResponseEntity.status(HttpStatus.OK).body(bookCatalogService.getAllBooks(page, size));
 
-
     }
+
+    @PutMapping(path="update/{id}")
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO dto) {
+
+        BookDTO saveBook  = bookCatalogService.updateBook(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(saveBook);
+    }
+
 
 }
