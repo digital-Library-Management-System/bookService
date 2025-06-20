@@ -22,30 +22,23 @@ public class BookCatalogService {
     private final BookCatalogRepository bookCatalogRepository;
     private final BookMapper bookMapper;
 
-
-    public BookCatalogService(BookCatalogRepository bookCatalogRepository, ModelMapper modelMapper) {
-        this.bookCatalogRepository = bookCatalogRepository;
-        this.modelMapper = modelMapper;
-
-
-    }
-
-    public BookDTO addBook(BookDTO dto) {
-        BookCatalog book = modelMapper.map(dto, BookCatalog.class);
+    public BookRequestDTO addBook(BookRequestDTO dto) {
+        BookCatalog book = bookMapper.bookRequestDTOToBookCatalog(dto);
 
         if (bookCatalogRepository.findByIsbn(book.getIsbn()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "book already exists");
         }
 
         BookCatalog savedBook = bookCatalogRepository.save(book);
-        return modelMapper.map(savedBook, BookDTO.class);
+        return bookMapper.bookCatalogToBookRequestDTO(savedBook);
     }
 
 
-    public BookCatalog getBookById(Long id) {
+    public BookResponseDTO getBookById(Long id) {
 
-        return bookCatalogRepository.findById(id)
+        BookCatalog book = bookCatalogRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+        return bookMapper.bookCatalogToBookResponseDTO(book);
 
     }
 

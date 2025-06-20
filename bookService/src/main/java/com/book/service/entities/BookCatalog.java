@@ -28,12 +28,5 @@ public class BookCatalog {
     private int availableCopies;
     private int totalCopies;
 
-    public BookCatalog(String title, String author, String isbn, String genre, int availableCopies, int totalCopies) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.genre = genre;
-        this.availableCopies = availableCopies;
-        this.totalCopies = totalCopies;
-    }
+
 }

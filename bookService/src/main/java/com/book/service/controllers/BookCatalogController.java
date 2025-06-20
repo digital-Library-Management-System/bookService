@@ -14,25 +14,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="/bookService/")
+@RequiredArgsConstructor
 public class BookCatalogController {
 
     private final BookCatalogService bookCatalogService;
 
-    public BookCatalogController(BookCatalogService bookCatalogService) {
-        this.bookCatalogService = bookCatalogService;
-
-
-    }
-
     @PostMapping(path="create")
-    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO dto) {
-        BookDTO saveBook  = bookCatalogService.addBook(dto);
+    public ResponseEntity<BookRequestDTO> createBook(@RequestBody BookRequestDTO dto) {
+
+        BookRequestDTO saveBook  = bookCatalogService.addBook(dto);
         return ResponseEntity.status(HttpStatus.OK).body(saveBook);
 
     }
 
     @GetMapping(path="getBookById/{id}")
-    public ResponseEntity<BookCatalog> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id) {
 
         bookCatalogService.getBookById(id);
         return ResponseEntity.status(HttpStatus.OK).body(bookCatalogService.getBookById(id));
@@ -51,6 +47,12 @@ public class BookCatalogController {
 
         BookRequestDTO saveBook  = bookCatalogService.updateBook(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(saveBook);
+    }
+
+    @DeleteMapping(path ="delete/{id}")
+    public ResponseEntity<BookResponseDTO> deleteBook(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogService.deleteBook(id));
+
     }
 
 
