@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor @NoArgsConstructor
-public class BookDTO {
+public class BookRequestDTO {
 
     private String title;
     private String author;
-    private String isbn;
     private String genre;
+    private String isbn;
     private int availableCopies;
     private int totalCopies;
 

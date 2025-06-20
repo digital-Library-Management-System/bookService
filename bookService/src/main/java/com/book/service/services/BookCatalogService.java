@@ -1,9 +1,11 @@
 package com.book.service.services;
 
-import com.book.service.dto.BookDTO;
+import com.book.service.dto.BookRequestDTO;
+import com.book.service.dto.BookResponseDTO;
 import com.book.service.entities.BookCatalog;
+import com.book.service.mappers.BookMapper;
 import com.book.service.repositories.BookCatalogRepository;
-import org.modelmapper.ModelMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,11 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Service
+@Service @RequiredArgsConstructor
 public class BookCatalogService {
 
     private final BookCatalogRepository bookCatalogRepository;
-    private final ModelMapper modelMapper;
+    private final BookMapper bookMapper;
 
 
     public BookCatalogService(BookCatalogRepository bookCatalogRepository, ModelMapper modelMapper) {
@@ -60,7 +62,7 @@ public class BookCatalogService {
 
     }
 
-    public BookDTO updateBook(Long id, BookDTO dto) {
+    public BookRequestDTO updateBook(Long id, BookRequestDTO dto) {
         BookCatalog book = bookCatalogRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
@@ -69,12 +71,20 @@ public class BookCatalogService {
         if (!Objects.equals(book.getAuthor(), dto.getAuthor())) book.setAuthor(dto.getAuthor());
         if (!Objects.equals(book.getIsbn(), dto.getIsbn())) book.setIsbn(dto.getIsbn());
         if (!Objects.equals(book.getGenre(), dto.getGenre())) book.setGenre(dto.getGenre());
-
         if (book.getAvailableCopies() != dto.getAvailableCopies()) book.setAvailableCopies(dto.getAvailableCopies());
         if (book.getTotalCopies() != dto.getTotalCopies()) book.setTotalCopies(dto.getTotalCopies());
 
         BookCatalog updated = bookCatalogRepository.save(book);
-        return modelMapper.map(updated, BookDTO.class);
+        return bookMapper.bookCatalogToBookRequestDTO(updated);
+    }
+
+    public BookResponseDTO deleteBook(Long id) {
+        BookCatalog book = bookCatalogRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found"));
+         bookCatalogRepository.deleteById(id);
+         return bookMapper.bookCatalogToBookResponseDTO(book);
+
+
     }
 
 }

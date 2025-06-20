@@ -1,8 +1,10 @@
 package com.book.service.controllers;
 
-import com.book.service.dto.BookDTO;
+import com.book.service.dto.BookRequestDTO;
+import com.book.service.dto.BookResponseDTO;
 import com.book.service.entities.BookCatalog;
 import com.book.service.services.BookCatalogService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +47,9 @@ public class BookCatalogController {
     }
 
     @PutMapping(path="update/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO dto) {
+    public ResponseEntity<BookRequestDTO> updateBook(@PathVariable Long id, @RequestBody BookRequestDTO dto) {
 
-        BookDTO saveBook  = bookCatalogService.updateBook(id, dto);
+        BookRequestDTO saveBook  = bookCatalogService.updateBook(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(saveBook);
     }
 
