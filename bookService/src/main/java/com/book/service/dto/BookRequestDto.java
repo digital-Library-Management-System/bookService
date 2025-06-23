@@ -1,12 +1,11 @@
 package com.book.service.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor @NoArgsConstructor
-public class BookRequestDTO {
+public class BookRequestDto {
 
     private String title;
     private String author;

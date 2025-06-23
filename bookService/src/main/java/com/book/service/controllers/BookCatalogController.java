@@ -1,9 +1,9 @@
 package com.book.service.controllers;
 
-import com.book.service.dto.BookRequestDTO;
-import com.book.service.dto.BookResponseDTO;
+import com.book.service.dto.BookRequestDto;
+import com.book.service.dto.BookResponseDto;
 import com.book.service.entities.BookCatalog;
-import com.book.service.services.BookCatalogService;
+import com.book.service.services.BookCatalogServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,41 +17,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookCatalogController {
 
-    private final BookCatalogService bookCatalogService;
+    private final BookCatalogServiceImpl bookCatalogServiceImpl;
 
     @PostMapping(path="create")
-    public ResponseEntity<BookRequestDTO> createBook(@RequestBody BookRequestDTO dto) {
+    public ResponseEntity<BookRequestDto> createBook(@RequestBody BookRequestDto dto) {
 
-        BookRequestDTO saveBook  = bookCatalogService.addBook(dto);
+        BookRequestDto saveBook  = bookCatalogServiceImpl.addBook(dto);
         return ResponseEntity.status(HttpStatus.OK).body(saveBook);
 
     }
 
     @GetMapping(path="getBookById/{id}")
-    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookResponseDto> getBookById(@PathVariable Long id) {
 
-        bookCatalogService.getBookById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogService.getBookById(id));
+        bookCatalogServiceImpl.getBookById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogServiceImpl.getBookById(id));
     }
 
     @GetMapping(path = "getAllBooksByPagination")
-    public ResponseEntity<List<BookCatalog>> getAllBooks(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<List<BookResponseDto>> getAllBooks(@RequestParam int page, @RequestParam int size) {
 
-        bookCatalogService.getAllBooks(page, size);
-        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogService.getAllBooks(page, size));
+        bookCatalogServiceImpl.getAllBooks(page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogServiceImpl.getAllBooks(page, size));
 
     }
 
     @PutMapping(path="update/{id}")
-    public ResponseEntity<BookRequestDTO> updateBook(@PathVariable Long id, @RequestBody BookRequestDTO dto) {
+    public ResponseEntity<BookRequestDto> updateBook(@PathVariable Long id, @RequestBody BookRequestDto dto) {
 
-        BookRequestDTO saveBook  = bookCatalogService.updateBook(id, dto);
+        BookRequestDto saveBook  = bookCatalogServiceImpl.updateBook(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(saveBook);
     }
 
     @DeleteMapping(path ="delete/{id}")
-    public ResponseEntity<BookResponseDTO> deleteBook(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogService.deleteBook(id));
+    public ResponseEntity<BookResponseDto> deleteBook(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookCatalogServiceImpl.deleteBook(id));
 
     }
 

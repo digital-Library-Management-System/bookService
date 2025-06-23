@@ -1,14 +1,13 @@
 package com.book.service.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookResponseDTO {
+public class BookResponseDto {
 
     private Long id;
     private String title;

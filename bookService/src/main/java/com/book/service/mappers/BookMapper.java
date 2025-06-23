@@ -1,23 +1,25 @@
 package com.book.service.mappers;
 
-import com.book.service.dto.BookRequestDTO;
-import com.book.service.dto.BookResponseDTO;
+import com.book.service.dto.BookRequestDto;
+import com.book.service.dto.BookResponseDto;
 import com.book.service.entities.BookCatalog;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
+import java.util.List;
 
 
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-    BookResponseDTO bookCatalogToBookResponseDTO(BookCatalog book);
-    BookCatalog bookResponseDTOToBookCatalog(BookResponseDTO bookResponseDTO);
+    BookResponseDto toResponseDto(BookCatalog book);
+    List<BookResponseDto> toResponseDtoList(List<BookCatalog> books);
 
     @Mapping(target ="id", ignore = true)
-    BookCatalog bookRequestDTOToBookCatalog(BookRequestDTO bookRequestDTO);
-    BookRequestDTO bookCatalogToBookRequestDTO(BookCatalog book);
-
+    BookCatalog toEntity(BookRequestDto bookRequestDTO);
+    BookRequestDto toRequestDto(BookCatalog book);
+    void updateBookFromDto(BookRequestDto dto, @MappingTarget BookCatalog book);
 
 
 }
