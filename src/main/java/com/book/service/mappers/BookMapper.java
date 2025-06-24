@@ -1,7 +1,6 @@
 package com.book.service.mappers;
 
-import com.book.service.dto.BookRequestDto;
-import com.book.service.dto.BookResponseDto;
+import com.book.service.dto.BookDto;
 import com.book.service.entities.BookCatalog;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,15 +12,14 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-    BookResponseDto toResponseDto(BookCatalog book);
+    BookDto toDto(BookCatalog book);
 
-    List<BookResponseDto> toResponseDtoList(List<BookCatalog> books);
+    List<BookDto> toDtoList(List<BookCatalog> books);
 
     @Mapping(target ="id", ignore = true)
-    BookCatalog toEntity(BookRequestDto bookRequestDTO);
+    BookCatalog toEntity(BookDto bookDTO);
 
-    BookRequestDto toRequestDto(BookCatalog book);
-
-    void updateBookFromDto(BookRequestDto dto, @MappingTarget BookCatalog book);
+    @Mapping(target = "id", ignore = true)
+    void updateBookFromDto(BookDto dto, @MappingTarget BookCatalog book);
 
 }

@@ -1,16 +1,21 @@
 package com.book.service.services;
 
-import com.book.service.dto.BookRequestDto;
-import com.book.service.dto.BookResponseDto;
+import com.book.service.dto.BookDto;
+import com.book.service.entities.BookCatalog;
 
 
 import java.util.List;
 
 public interface BookCatalogService {
-    BookRequestDto addBook(BookRequestDto dto);
-    BookResponseDto getBookById(Long id);
-    List<BookResponseDto> getAllBooks(int page, int size);
-    BookRequestDto updateBook(Long id, BookRequestDto dto);
-    BookResponseDto deleteBook(Long id);
+
+    BookCatalog addBook(BookCatalog book);
+
+    BookCatalog getBookById(Long id);
+
+    List<BookCatalog> getAllBooks(int page, int size);
+
+    BookCatalog updateBook(Long id,  BookDto dto);
+
+    void deleteBook(Long id);
 
 }

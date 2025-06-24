@@ -5,8 +5,9 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor @NoArgsConstructor
-public class BookRequestDto {
+public class BookDto {
 
+    private Long id;
     private String title;
     private String author;
     private String genre;
