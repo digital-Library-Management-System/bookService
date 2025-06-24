@@ -19,7 +19,7 @@ public class BookCatalogController {
 
     private final BookCatalogServiceImpl bookCatalogServiceImpl;
 
-    @PostMapping(path="create")
+    @PostMapping
     public ResponseEntity<BookRequestDto> createBook(@RequestBody BookRequestDto dto) {
 
         BookRequestDto saveBook  = bookCatalogServiceImpl.addBook(dto);
@@ -27,14 +27,15 @@ public class BookCatalogController {
 
     }
 
-    @GetMapping(path="getBookById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookResponseDto> getBookById(@PathVariable Long id) {
 
         bookCatalogServiceImpl.getBookById(id);
         return ResponseEntity.status(HttpStatus.OK).body(bookCatalogServiceImpl.getBookById(id));
+
     }
 
-    @GetMapping(path = "getAllBooksByPagination")
+    @GetMapping
     public ResponseEntity<List<BookResponseDto>> getAllBooks(@RequestParam int page, @RequestParam int size) {
 
         bookCatalogServiceImpl.getAllBooks(page, size);
@@ -42,14 +43,15 @@ public class BookCatalogController {
 
     }
 
-    @PutMapping(path="update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BookRequestDto> updateBook(@PathVariable Long id, @RequestBody BookRequestDto dto) {
 
         BookRequestDto saveBook  = bookCatalogServiceImpl.updateBook(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(saveBook);
+
     }
 
-    @DeleteMapping(path ="delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<BookResponseDto> deleteBook(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(bookCatalogServiceImpl.deleteBook(id));
 

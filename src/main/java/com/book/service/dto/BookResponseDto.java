@@ -16,5 +16,4 @@ public class BookResponseDto {
     private String genre;
     private int availableCopies;
     private int totalCopies;
-
 }

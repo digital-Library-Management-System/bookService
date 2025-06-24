@@ -14,12 +14,14 @@ import java.util.List;
 public interface BookMapper {
 
     BookResponseDto toResponseDto(BookCatalog book);
+
     List<BookResponseDto> toResponseDtoList(List<BookCatalog> books);
 
     @Mapping(target ="id", ignore = true)
     BookCatalog toEntity(BookRequestDto bookRequestDTO);
-    BookRequestDto toRequestDto(BookCatalog book);
-    void updateBookFromDto(BookRequestDto dto, @MappingTarget BookCatalog book);
 
+    BookRequestDto toRequestDto(BookCatalog book);
+
+    void updateBookFromDto(BookRequestDto dto, @MappingTarget BookCatalog book);
 
 }

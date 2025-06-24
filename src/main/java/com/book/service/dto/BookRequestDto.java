@@ -13,5 +13,4 @@ public class BookRequestDto {
     private String isbn;
     private int availableCopies;
     private int totalCopies;
-
 }

@@ -27,5 +27,4 @@ public class BookCatalog {
     private int availableCopies;
     private int totalCopies;
 
-
 }
