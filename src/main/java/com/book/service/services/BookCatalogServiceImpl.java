@@ -1,6 +1,6 @@
 package com.book.service.services;
 
-import com.book.service.dto.BookDto;
+import com.book.service.dto.BookRequestDto;
 import com.book.service.entities.BookCatalog;
 import com.book.service.mappers.BookMapper;
 import com.book.service.repositories.BookCatalogRepository;
@@ -52,7 +52,7 @@ public class BookCatalogServiceImpl implements BookCatalogService {
 
     }
 
-    public BookCatalog updateBook(Long id, BookDto dto) {
+    public BookCatalog updateBook(Long id, BookRequestDto dto) {
 
         BookCatalog book = bookCatalogRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));

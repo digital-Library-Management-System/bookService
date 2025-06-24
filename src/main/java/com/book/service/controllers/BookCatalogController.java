@@ -1,6 +1,7 @@
 package com.book.service.controllers;
 
-import com.book.service.dto.BookDto;
+import com.book.service.dto.BookRequestDto;
+import com.book.service.dto.BookResponseDto;
 import com.book.service.entities.BookCatalog;
 import com.book.service.mappers.BookMapper;
 import com.book.service.services.BookCatalogServiceImpl;
@@ -21,43 +22,43 @@ public class BookCatalogController {
     private final BookMapper bookMapper;
 
     @PostMapping
-    public ResponseEntity<String> createBook(@RequestBody BookDto dto) {
+    public ResponseEntity<BookResponseDto> createBook(@RequestBody BookRequestDto dto) {
 
         BookCatalog book = bookMapper.toEntity(dto);
         BookCatalog saveBook  = bookCatalogServiceImpl.addBook(book);
-        bookMapper.toDto(saveBook);
+        BookResponseDto bookResponse = bookMapper.toDto(saveBook);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Book created successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(bookResponse);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookResponseDto> getBookById(@PathVariable Long id) {
 
         BookCatalog saveBook = bookCatalogServiceImpl.getBookById(id);
-        BookDto bookResponse = bookMapper.toDto(saveBook);
+        BookResponseDto bookResponse = bookMapper.toDto(saveBook);
 
         return ResponseEntity.status(HttpStatus.OK).body(bookResponse);
 
     }
 
     @GetMapping
-    public ResponseEntity<List<BookDto>> getAllBooks(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<List<BookResponseDto>> getAllBooks(@RequestParam int page, @RequestParam int size) {
 
         List<BookCatalog> saveBook = bookCatalogServiceImpl.getAllBooks(page, size);
-        List<BookDto> bookResponse = bookMapper.toDtoList(saveBook);
+        List<BookResponseDto> bookResponse = bookMapper.toDtoList(saveBook);
 
         return ResponseEntity.status(HttpStatus.OK).body(bookResponse);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateBook(@PathVariable Long id, @RequestBody BookDto dto) {
+    public ResponseEntity<BookResponseDto> updateBook(@PathVariable Long id, @RequestBody BookRequestDto dto) {
 
         BookCatalog saveBook  = bookCatalogServiceImpl.updateBook(id, dto);
-        bookMapper.toDto(saveBook);
+        BookResponseDto bookResponse = bookMapper.toDto(saveBook);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Book updated successfully");
+        return ResponseEntity.status(HttpStatus.OK).body(bookResponse);
 
     }
 

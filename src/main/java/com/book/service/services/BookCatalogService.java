@@ -1,6 +1,6 @@
 package com.book.service.services;
 
-import com.book.service.dto.BookDto;
+import com.book.service.dto.BookRequestDto;
 import com.book.service.entities.BookCatalog;
 
 
@@ -14,7 +14,7 @@ public interface BookCatalogService {
 
     List<BookCatalog> getAllBooks(int page, int size);
 
-    BookCatalog updateBook(Long id,  BookDto dto);
+    BookCatalog updateBook(Long id,  BookRequestDto dto);
 
     void deleteBook(Long id);
 
