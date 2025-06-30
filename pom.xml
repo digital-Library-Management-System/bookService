@@ -87,6 +87,7 @@
 					</annotationProcessorPaths>
 					<compilerArgs>
 						<arg>-Amapstruct.defaultComponentModel=spring</arg>
+						<arg>-proc:only</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>
@@ -95,6 +96,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.book.service.BookServiceApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

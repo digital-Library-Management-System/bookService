@@ -39,7 +39,7 @@ public class BookCatalogServiceImpl implements BookCatalogService {
 
     }
 
-    public  List<BookCatalog>  getAllBooks(int page, int size) {
+    public List<BookCatalog> getAllBooks(int page, int size) {
 
         List<BookCatalog> catalog = bookCatalogRepository.findAll(PageRequest.of(page - 1, size)).getContent();
 

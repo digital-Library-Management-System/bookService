@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path="/bookService/")
+@RequestMapping(path="/bookService")
 @RequiredArgsConstructor
 public class BookCatalogController {
 
@@ -46,8 +46,7 @@ public class BookCatalogController {
     public ResponseEntity<List<BookResponseDto>> getAllBooks(@RequestParam int page, @RequestParam int size) {
 
         List<BookCatalog> saveBook = bookCatalogServiceImpl.getAllBooks(page, size);
-        List<BookResponseDto> bookResponse = bookMapper.toDtoList(saveBook);
-
+        List<BookResponseDto> bookResponse  = bookMapper.toDtoList(saveBook);
         return ResponseEntity.status(HttpStatus.OK).body(bookResponse);
 
     }
