@@ -21,6 +21,6 @@ public interface BookMapper {
     BookCatalog toEntity(BookRequestDto bookDTO);
 
     @Mapping(target = "id", ignore = true)
-    void updateBookFromDto(BookRequestDto dto, @MappingTarget BookCatalog book);
+    BookCatalog updateBookFromDto(BookRequestDto dto, @MappingTarget BookCatalog book);
 
 }

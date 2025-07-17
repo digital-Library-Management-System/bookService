@@ -14,6 +14,4 @@ public interface BookCatalogRepository extends JpaRepository<BookCatalog, Long> 
 
     Optional<BookCatalog> findByIsbn(String isbn);
     Page<BookCatalog> findAll(Pageable pageable);
-
-
 }

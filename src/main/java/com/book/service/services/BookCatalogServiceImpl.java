@@ -5,17 +5,18 @@ import com.book.service.entities.BookCatalog;
 import com.book.service.mappers.BookMapper;
 import com.book.service.repositories.BookCatalogRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 
 import java.util.List;
 
 
 
-@Service @RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class BookCatalogServiceImpl implements BookCatalogService {
 
     private final BookCatalogRepository bookCatalogRepository;
@@ -28,7 +29,6 @@ public class BookCatalogServiceImpl implements BookCatalogService {
         }
 
         return bookCatalogRepository.save(book);
-
     }
 
 
@@ -36,20 +36,15 @@ public class BookCatalogServiceImpl implements BookCatalogService {
 
         return bookCatalogRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
-
     }
 
-    public List<BookCatalog> getAllBooks(int page, int size) {
+    public Page<BookCatalog> getAllBooks(Pageable pageable) {
 
-        List<BookCatalog> catalog = bookCatalogRepository.findAll(PageRequest.of(page - 1, size)).getContent();
+        return bookCatalogRepository.findAll(pageable);
+    }
 
-        if(catalog.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No books found");
-        if (page < 1 || page > 2) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "the page must be between 1 and 2");
-        else if (size > 6) throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "the size must be between 1 and 6");
-        return catalog;
-
+    public List<BookCatalog> getAll(){
+        return bookCatalogRepository.findAll();
     }
 
     public BookCatalog updateBook(Long id, BookRequestDto dto) {
@@ -57,22 +52,20 @@ public class BookCatalogServiceImpl implements BookCatalogService {
         BookCatalog book = bookCatalogRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
-        bookMapper.updateBookFromDto(dto, book);
+        BookCatalog updatedBook = bookMapper.updateBookFromDto(dto, book);
 
-        return bookCatalogRepository.save(book);
+        return bookCatalogRepository.save(updatedBook);
     }
 
 
     public void deleteBook(Long id) {
        boolean exists = bookCatalogRepository.existsById(id);
+
        if (exists) {
             bookCatalogRepository.deleteById(id);
        }else{
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found");
        }
-
-
-
     }
 
 }
